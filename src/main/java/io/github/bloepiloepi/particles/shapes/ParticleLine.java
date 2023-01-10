@@ -1,8 +1,9 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import io.github.bloepiloepi.particles.ParticleUtils;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -29,16 +30,16 @@ public class ParticleLine extends ParticleShape {
         this.length = Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
-    public ParticleLine(@NotNull Position position1, @NotNull Position position2) {
-        this(position1.getX(), position1.getY(), position1.getZ(),
-                position2.getX(), position2.getY(), position2.getZ());
+    public ParticleLine(@NotNull Point position1, @NotNull Point position2) {
+        this(position1.x(), position1.y(), position1.z(),
+                position2.x(), position2.y(), position2.z());
     }
 
     public @NotNull LineIterator iterator(@NotNull ShapeOptions options) {
         return new LineIterator(this, options);
     }
 
-    public static class LineIterator extends ParticleIterator<ParticleLine> implements Iterator<Position> {
+    public static class LineIterator extends ParticleIterator<ParticleLine> implements Iterator<Point> {
         private final double changeX, changeY, changeZ;
         private final int particleCount;
 
@@ -70,8 +71,8 @@ public class ParticleLine extends ParticleShape {
         }
 
         @Override
-        public Position next() {
-            Position position = new Position(x, y, z);
+        public Point next() {
+            Point position = new Vec(x, y, z);
 
             particles++;
 
@@ -83,11 +84,11 @@ public class ParticleLine extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
-                Position position = next();
+                Point position = next();
                 if (pattern.next()) {
-                    ParticleUtils.drawParticle(players, start.clone().add(position), options);
+                    ParticleUtils.drawParticle(players, start.add(position), options);
                 }
             }
         }

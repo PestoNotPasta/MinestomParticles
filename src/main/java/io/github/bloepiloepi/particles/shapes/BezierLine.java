@@ -1,21 +1,21 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import io.github.bloepiloepi.particles.ParticleUtils;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class BezierLine extends ParticleShape {
-    private final Position[] positions;
+    private final Point[] points;
 
-    public BezierLine(@NotNull Position start, @NotNull Position end,
-                      @NotNull Position[] controlPoints,
+    public BezierLine(@NotNull Point start, @NotNull Point end,
+                      @NotNull Point[] controlPoints,
                       double step) {
-        List<Position> positions = new ArrayList<>();
+        List<Point> positions = new ArrayList<>();
 
-        Position[] points = new Position[2 + controlPoints.length];
+        Point[] points = new Point[2 + controlPoints.length];
         points[0] = start;
         System.arraycopy(controlPoints, 0, points, 1, controlPoints.length);
         points[points.length - 1] = end;
@@ -28,7 +28,7 @@ public class BezierLine extends ParticleShape {
             time += step;
         }
 
-        this.positions = positions.toArray(Position[]::new);
+        this.points = positions.toArray(Point[]::new);
     }
 
     //TODO options is not fully used for bezier curves (only linePattern)
@@ -37,7 +37,7 @@ public class BezierLine extends ParticleShape {
         return new BezierIterator(this, options);
     }
 
-    public static class BezierIterator extends ParticleIterator<BezierLine> implements Iterator<Position> {
+    public static class BezierIterator extends ParticleIterator<BezierLine> implements Iterator<Point> {
         private int index = 0;
 
         public BezierIterator(BezierLine shape, ShapeOptions options) {
@@ -46,12 +46,12 @@ public class BezierLine extends ParticleShape {
 
         @Override
         public boolean hasNext() {
-            return index < shape.positions.length;
+            return index < shape.points.length;
         }
 
         @Override
-        public Position next() {
-            Position position = shape.positions[index];
+        public Point next() {
+            Point position = shape.points[index];
 
             index++;
 
@@ -59,11 +59,11 @@ public class BezierLine extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
-                Position position = next();
+                Point position = next();
                 if (pattern.next()) {
-                    ParticleUtils.drawParticle(players, start.clone().add(position), options);
+                    ParticleUtils.drawParticle(players, start.add(position), options);
                 }
             }
         }
@@ -72,7 +72,7 @@ public class BezierLine extends ParticleShape {
     @Override
     public String toString() {
         return "BezierLine{" +
-                "positions=" + Arrays.toString(positions) +
+                "positions=" + Arrays.toString(points) +
                 '}';
     }
 }

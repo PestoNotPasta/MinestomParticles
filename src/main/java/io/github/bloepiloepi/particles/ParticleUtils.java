@@ -1,22 +1,23 @@
 package io.github.bloepiloepi.particles;
 
 import io.github.bloepiloepi.particles.shapes.ShapeOptions;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.utils.PacketUtils;
-import net.minestom.server.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
 public class ParticleUtils {
-    public static void drawParticle(Collection<Player> players, @NotNull Position position,
+    public static void drawParticle(Collection<Player> players, @NotNull Point point,
                                     @NotNull ShapeOptions options) {
-        ParticlePacket packet = options.createPacket(position.getX(), position.getY(), position.getZ());
+        ParticlePacket packet = options.createPacket(point.x(), point.y(), point.z());
         PacketUtils.sendGroupedPacket(players, packet);
     }
 
-    public static Position bezier(@NotNull Position[] points, double time) {
+    public static Point bezier(@NotNull Point[] points, double time) {
         double x = 0;
         double y = 0;
         double z = 0;
@@ -25,12 +26,12 @@ public class ParticleUtils {
         for (int i = 0; i <= order; i++) {
             double preCompute = binomial(order, i) * Math.pow((1 - time), (order - i)) * Math.pow(time, i);
 
-            x = x + (preCompute * points[i].getX());
-            y = y + (preCompute * points[i].getY());
-            z = z + (preCompute * points[i].getZ());
+            x = x + (preCompute * points[i].x());
+            y = y + (preCompute * points[i].y());
+            z = z + (preCompute * points[i].z());
         }
 
-        return new Position(x, y, z);
+        return new Vec(x, y, z);
     }
 
     public static int binomial(int n, int k) {

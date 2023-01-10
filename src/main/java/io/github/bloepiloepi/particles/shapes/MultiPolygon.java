@@ -1,7 +1,7 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class MultiPolygon extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
                 ParticleShape shape = next();
                 shape.iterator(options).draw(players, start, pattern.reset());

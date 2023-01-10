@@ -120,7 +120,6 @@ public class ShapeOptions {
             if (particleCount == -1 && particleDistance == -1) {
                 particleDistance = 1;
             }
-
             return new ShapeOptions(particle, visibleFromDistance, particleSpeed, dataWriter, linePattern, particleDistance, particleCount);
         }
     }

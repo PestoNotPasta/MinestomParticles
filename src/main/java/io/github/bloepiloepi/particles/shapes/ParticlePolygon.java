@@ -1,7 +1,7 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -9,10 +9,10 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class ParticlePolygon extends ParticleShape {
-    private final Position[] points;
+    private final Point[] points;
     private final boolean close;
 
-    public ParticlePolygon(@NotNull Position[] points, boolean close) {
+    public ParticlePolygon(@NotNull Point[] points, boolean close) {
         this.points = points;
         this.close = close;
     }
@@ -35,15 +35,15 @@ public class ParticlePolygon extends ParticleShape {
 
         @Override
         public ParticleLine.LineIterator next() {
-            Position position1 = shape.points[index];
+            Point position1 = shape.points[index];
             index++;
-            Position position2 = shape.points[hasNext() ? index : 0];
+            Point position2 = shape.points[hasNext() ? index : 0];
 
             return new ParticleLine(position1, position2).iterator(options);
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
                 ParticleLine.LineIterator line = next();
                 line.draw(players, start, pattern);

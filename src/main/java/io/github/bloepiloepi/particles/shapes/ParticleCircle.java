@@ -1,8 +1,9 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import io.github.bloepiloepi.particles.ParticleUtils;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -32,7 +33,7 @@ public class ParticleCircle extends ParticleShape {
         return new CircleIterator(this, options);
     }
 
-    public static class CircleIterator extends ParticleIterator<ParticleCircle> implements Iterator<Position> {
+    public static class CircleIterator extends ParticleIterator<ParticleCircle> implements Iterator<Point> {
         private final int particleCount;
         private final double angleIncrement;
 
@@ -58,7 +59,7 @@ public class ParticleCircle extends ParticleShape {
         }
 
         @Override
-        public Position next() {
+        public Point next() {
             double c1 = shape.radius * Math.cos(currentAngle);
             double c2 = shape.radius * Math.sin(currentAngle);
 
@@ -66,20 +67,20 @@ public class ParticleCircle extends ParticleShape {
             currentAngle += angleIncrement;
 
             if (shape.facing == Facing.X) {
-                return new Position(shape.x, shape.y + c1, shape.z + c2);
+                return new Vec(shape.x, shape.y + c1, shape.z + c2);
             } else if (shape.facing == Facing.Y) {
-                return new Position(shape.x + c1, shape.y, shape.z + c2);
+                return new Vec(shape.x + c1, shape.y, shape.z + c2);
             } else {
-                return new Position(shape.x + c1, shape.y + c2, shape.z);
+                return new Vec(shape.x + c1, shape.y + c2, shape.z);
             }
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
-                Position position = next();
+                Point position = next();
                 if (pattern.next()) {
-                    ParticleUtils.drawParticle(players, start.clone().add(position), options);
+                    ParticleUtils.drawParticle(players, start.add(position), options);
                 }
             }
         }

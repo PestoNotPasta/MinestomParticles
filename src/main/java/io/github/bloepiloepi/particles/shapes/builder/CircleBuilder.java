@@ -1,15 +1,16 @@
 package io.github.bloepiloepi.particles.shapes.builder;
 
 import io.github.bloepiloepi.particles.shapes.ParticleCircle;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
 public class CircleBuilder {
-    private Position position = new Position();
+    private Point position = Vec.ZERO;
     private double radius = 1;
     private ParticleCircle.Facing facing = ParticleCircle.Facing.Y;
 
-    public @NotNull CircleBuilder position(@NotNull Position position) {
+    public @NotNull CircleBuilder position(@NotNull Point position) {
         this.position = position;
         return this;
     }
@@ -25,6 +26,6 @@ public class CircleBuilder {
     }
 
     public @NotNull ParticleCircle build() {
-        return new ParticleCircle(position.getX(), position.getY(), position.getZ(), radius, facing);
+        return new ParticleCircle(position.x(), position.y(), position.z(), radius, facing);
     }
 }

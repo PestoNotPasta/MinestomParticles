@@ -1,22 +1,22 @@
 package io.github.bloepiloepi.particles.shapes.builder;
 
 import io.github.bloepiloepi.particles.shapes.ParticlePolygon;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PolygonBuilder {
-    private List<Position> points = new ArrayList<>();
+    private List<Point> points = new ArrayList<>();
     private boolean close = true;
 
-    public @NotNull PolygonBuilder points(@NotNull List<Position> points) {
+    public @NotNull PolygonBuilder points(@NotNull List<Point> points) {
         this.points = points;
         return this;
     }
 
-    public @NotNull PolygonBuilder addPoint(@NotNull Position point) {
+    public @NotNull PolygonBuilder addPoint(@NotNull Point point) {
         this.points.add(point);
         return this;
     }
@@ -27,6 +27,6 @@ public class PolygonBuilder {
     }
 
     public @NotNull ParticlePolygon build() {
-        return new ParticlePolygon(points.toArray(Position[]::new), close);
+        return new ParticlePolygon(points.toArray(Point[]::new), close);
     }
 }

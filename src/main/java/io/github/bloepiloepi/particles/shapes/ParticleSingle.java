@@ -1,8 +1,9 @@
 package io.github.bloepiloepi.particles.shapes;
 
 import io.github.bloepiloepi.particles.ParticleUtils;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.Position;
+import net.minestom.server.coordinate.Point;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -17,8 +18,8 @@ public class ParticleSingle extends ParticleShape {
         this.z = z;
     }
 
-    public ParticleSingle(@NotNull Position position) {
-        this(position.getX(), position.getY(), position.getZ());
+    public ParticleSingle(@NotNull Point position) {
+        this(position.x(), position.y(), position.z());
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ParticleSingle extends ParticleShape {
         return new SingleIterator(this, options);
     }
 
-    public static class SingleIterator extends ParticleIterator<ParticleSingle> implements Iterator<Position> {
+    public static class SingleIterator extends ParticleIterator<ParticleSingle> implements Iterator<Point> {
         private boolean done = false;
 
         protected SingleIterator(ParticleSingle shape, ShapeOptions options) {
@@ -39,17 +40,17 @@ public class ParticleSingle extends ParticleShape {
         }
 
         @Override
-        public Position next() {
+        public Point next() {
             done = true;
 
-            return new Position(shape.x, shape.y, shape.z);
+            return new Vec(shape.x, shape.y, shape.z);
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Position start, @NotNull LinePattern.Iterator pattern) {
-            Position position = next();
+        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
+            Point position = next();
             if (pattern.next()) {
-                ParticleUtils.drawParticle(players, start.clone().add(position), options);
+                ParticleUtils.drawParticle(players, start.add(position), options);
             }
         }
     }
