@@ -15,8 +15,14 @@ dependencies {
     compileOnly 'com.github.Minestom.Minestom:Minestom:-SNAPSHOT'
 }
 
-test {
-    dependencies {
-        implementation 'com.github.Minestom.Minestom:Minestom:-SNAPSHOT'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.bloepiloepi'
+            artifactId = 'MinestomParticles'
+            version = '1.0.0'
+
+            from components.java
+        }
     }
 }
