@@ -1,6 +1,6 @@
 package io.github.bloepiloepi.particles.shapes;
 
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import org.jetbrains.annotations.NotNull;
@@ -16,13 +16,13 @@ public abstract class ParticleIterator<T extends ParticleShape> {
         this.options = options;
     }
 
-    public void draw(@NotNull Instance instance, @NotNull Point start) {
+    public void draw(@NotNull Instance instance, @NotNull Vec start) {
         draw(instance.getPlayers(), start, options.getPatternIterator());
     }
 
-    public void draw(@NotNull Collection<Player> players, @NotNull Point start) {
+    public void draw(@NotNull Collection<Player> players, @NotNull Vec start) {
         draw(players, start, options.getPatternIterator());
     }
 
-    public abstract void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern);
+    public abstract void draw(@NotNull Collection<Player> players, @NotNull Vec start, @NotNull LinePattern.Iterator pattern);
 }

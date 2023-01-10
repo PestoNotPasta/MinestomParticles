@@ -1,7 +1,7 @@
 package io.github.bloepiloepi.particles.shapes.builder;
 
 import io.github.bloepiloepi.particles.shapes.BezierLine;
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,22 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BezierBuilder {
-    private final List<Point> controlPoints = new ArrayList<>();
-    private Point start = Vec.ZERO;
-    private Point end = Vec.ZERO;
+    private final List<Vec> controlPoints = new ArrayList<>();
+    private Vec start = Vec.ZERO;
+    private Vec end = Vec.ZERO;
     private double step = 0.1;
 
-    public @NotNull BezierBuilder start(@NotNull Point start) {
+    public @NotNull BezierBuilder start(@NotNull Vec start) {
         this.start = start;
         return this;
     }
 
-    public @NotNull BezierBuilder end(@NotNull Point end) {
+    public @NotNull BezierBuilder end(@NotNull Vec end) {
         this.end = end;
         return this;
     }
 
-    public @NotNull BezierBuilder addControlPoint(@NotNull Point controlPoint) {
+    public @NotNull BezierBuilder addControlPoint(@NotNull Vec controlPoint) {
         this.controlPoints.add(controlPoint);
         return this;
     }
@@ -35,6 +35,6 @@ public class BezierBuilder {
     }
 
     public @NotNull BezierLine build() {
-        return new BezierLine(start, end, controlPoints.toArray(Point[]::new), step);
+        return new BezierLine(start, end, controlPoints.toArray(Vec[]::new), step);
     }
 }

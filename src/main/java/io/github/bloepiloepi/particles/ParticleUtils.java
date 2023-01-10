@@ -1,7 +1,7 @@
 package io.github.bloepiloepi.particles;
 
 import io.github.bloepiloepi.particles.shapes.ShapeOptions;
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
@@ -11,13 +11,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 public class ParticleUtils {
-    public static void drawParticle(Collection<Player> players, @NotNull Point point,
+    public static void drawParticle(Collection<Player> players, @NotNull Vec point,
                                     @NotNull ShapeOptions options) {
         ParticlePacket packet = options.createPacket(point.x(), point.y(), point.z());
         PacketUtils.sendGroupedPacket(players, packet);
     }
 
-    public static Point bezier(@NotNull Point[] points, double time) {
+    public static Vec bezier(@NotNull Vec[] points, double time) {
         double x = 0;
         double y = 0;
         double z = 0;

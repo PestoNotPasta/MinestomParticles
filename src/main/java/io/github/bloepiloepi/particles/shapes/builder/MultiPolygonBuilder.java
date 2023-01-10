@@ -2,7 +2,7 @@ package io.github.bloepiloepi.particles.shapes.builder;
 
 import io.github.bloepiloepi.particles.shapes.MultiPolygon;
 import io.github.bloepiloepi.particles.shapes.ParticleShape;
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +13,7 @@ public class MultiPolygonBuilder {
     private final List<ParticleShape> completedShapes = new ArrayList<>();
     private PolygonBuilder lastPolygon;
 
-    public @NotNull MultiPolygonBuilder lineStart(@NotNull Point position) {
+    public @NotNull MultiPolygonBuilder lineStart(@NotNull Vec position) {
         lastPolygon = ParticleShape.polygon().addPoint(position);
         return this;
     }
@@ -25,13 +25,13 @@ public class MultiPolygonBuilder {
         return this;
     }
 
-    public @NotNull MultiPolygonBuilder lineTo(@NotNull Point position) {
+    public @NotNull MultiPolygonBuilder lineTo(@NotNull Vec position) {
         Check.stateCondition(lastPolygon == null, "Cannot use lineTo when no starting point is specified");
         lastPolygon.addPoint(position);
         return this;
     }
 
-    public @NotNull MultiPolygonBuilder jumpTo(@NotNull Point position) {
+    public @NotNull MultiPolygonBuilder jumpTo(@NotNull Vec position) {
         return endLine().lineStart(position);
     }
 

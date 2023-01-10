@@ -3,7 +3,7 @@ package io.github.bloepiloepi.particles.shapes;
 import io.github.bloepiloepi.particles.ParticleUtils;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class ParticleCircle extends ParticleShape {
         return new CircleIterator(this, options);
     }
 
-    public static class CircleIterator extends ParticleIterator<ParticleCircle> implements Iterator<Point> {
+    public static class CircleIterator extends ParticleIterator<ParticleCircle> implements Iterator<Vec> {
         private final int particleCount;
         private final double angleIncrement;
 
@@ -59,7 +59,7 @@ public class ParticleCircle extends ParticleShape {
         }
 
         @Override
-        public Point next() {
+        public Vec next() {
             double c1 = shape.radius * Math.cos(currentAngle);
             double c2 = shape.radius * Math.sin(currentAngle);
 
@@ -76,9 +76,9 @@ public class ParticleCircle extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Vec start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
-                Point position = next();
+                Vec position = next();
                 if (pattern.next()) {
                     ParticleUtils.drawParticle(players, start.add(position), options);
                 }

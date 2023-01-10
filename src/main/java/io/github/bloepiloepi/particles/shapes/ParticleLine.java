@@ -3,7 +3,7 @@ package io.github.bloepiloepi.particles.shapes;
 import io.github.bloepiloepi.particles.ParticleUtils;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -30,7 +30,7 @@ public class ParticleLine extends ParticleShape {
         this.length = Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
-    public ParticleLine(@NotNull Point position1, @NotNull Point position2) {
+    public ParticleLine(@NotNull Vec position1, @NotNull Vec position2) {
         this(position1.x(), position1.y(), position1.z(),
                 position2.x(), position2.y(), position2.z());
     }
@@ -39,7 +39,7 @@ public class ParticleLine extends ParticleShape {
         return new LineIterator(this, options);
     }
 
-    public static class LineIterator extends ParticleIterator<ParticleLine> implements Iterator<Point> {
+    public static class LineIterator extends ParticleIterator<ParticleLine> implements Iterator<Vec> {
         private final double changeX, changeY, changeZ;
         private final int particleCount;
 
@@ -71,8 +71,8 @@ public class ParticleLine extends ParticleShape {
         }
 
         @Override
-        public Point next() {
-            Point position = new Vec(x, y, z);
+        public Vec next() {
+            Vec position = new Vec(x, y, z);
 
             particles++;
 
@@ -84,9 +84,9 @@ public class ParticleLine extends ParticleShape {
         }
 
         @Override
-        public void draw(@NotNull Collection<Player> players, @NotNull Point start, @NotNull LinePattern.Iterator pattern) {
+        public void draw(@NotNull Collection<Player> players, @NotNull Vec start, @NotNull LinePattern.Iterator pattern) {
             while (hasNext()) {
-                Point position = next();
+                Vec position = next();
                 if (pattern.next()) {
                     ParticleUtils.drawParticle(players, start.add(position), options);
                 }
