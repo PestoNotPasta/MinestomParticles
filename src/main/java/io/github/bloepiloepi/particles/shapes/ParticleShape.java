@@ -4,9 +4,9 @@ import io.github.bloepiloepi.particles.shapes.builder.BezierBuilder;
 import io.github.bloepiloepi.particles.shapes.builder.CircleBuilder;
 import io.github.bloepiloepi.particles.shapes.builder.MultiPolygonBuilder;
 import io.github.bloepiloepi.particles.shapes.builder.PolygonBuilder;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -56,27 +56,28 @@ public abstract class ParticleShape {
         return new CircleBuilder().position(position);
     }
 
-    public static @NotNull MultiPolygon cube(@NotNull Vec position, double width, double height, double depth) {
+    public static @NotNull MultiPolygon box(@NotNull Vec center, double width, double height, double depth) {
+        double x = width / 2;
+        double y = height / 2;
+        double z = depth / 2;
+
         return multiPolygon()
-                .lineStart(position)
-                .lineTo(position.add(width, 0, 0))
-                .lineTo(position.add(width, 0, depth))
-                .lineTo(position.add(0, 0, depth))
-
-                .jumpTo(position.add(0, height, 0))
-                .lineTo(position.add(width, height, 0))
-                .lineTo(position.add(width, height, depth))
-                .lineTo(position.add(0, height, depth))
-
-                .jumpTo(position)
-                .lineTo(position.add(0, height, 0))
-                .jumpTo(position.add(width, 0, 0))
-                .lineTo(position.add(width, height, 0))
-                .jumpTo(position.add(width, 0, depth))
-                .lineTo(position.add(width, height, depth))
-                .jumpTo(position.add(0, 0, depth))
-                .lineTo(position.add(0, height, depth))
-
+                .addShape(ParticleLine.line(center.add(x, y, z), center.add(-x, y, z)))
+                .addShape(ParticleLine.line(center.add(x, y, z), center.add(x, -y, z)))
+                .addShape(ParticleLine.line(center.add(x, y, z), center.add(x, y, -z)))
+                .addShape(ParticleLine.line(center.add(-x, -y, -z), center.add(x, -y, -z)))
+                .addShape(ParticleLine.line(center.add(-x, -y, -z), center.add(-x, y, -z)))
+                .addShape(ParticleLine.line(center.add(-x, -y, -z), center.add(-x, -y, z)))
+                .addShape(ParticleLine.line(center.add(x, y, -z), center.add(-x, y, -z)))
+                .addShape(ParticleLine.line(center.add(x, -y, z), center.add(x, -y, -z)))
+                .addShape(ParticleLine.line(center.add(-x, y, z), center.add(-x, -y, z)))
+                .addShape(ParticleLine.line(center.add(-x, -y, z), center.add(x, -y, z)))
+                .addShape(ParticleLine.line(center.add(-x, y, -z), center.add(-x, y, z)))
+                .addShape(ParticleLine.line(center.add(x, -y, -z), center.add(x, y, -z)))
                 .build();
+    }
+
+    public static @NotNull MultiPolygon cube(@NotNull Vec center, double size) {
+        return box(center, size, size, size);
     }
 }
