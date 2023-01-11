@@ -2,7 +2,6 @@ package io.github.bloepiloepi.particles;
 
 import io.github.bloepiloepi.particles.shapes.ShapeOptions;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.utils.PacketUtils;
