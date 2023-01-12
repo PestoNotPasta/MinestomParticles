@@ -1,6 +1,5 @@
-package io.github.bloepiloepi.particles.shapes.builder;
+package io.github.bloepiloepi.particles.shapes.polygon;
 
-import io.github.bloepiloepi.particles.shapes.ParticlePolygon;
 import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.NotNull;
 

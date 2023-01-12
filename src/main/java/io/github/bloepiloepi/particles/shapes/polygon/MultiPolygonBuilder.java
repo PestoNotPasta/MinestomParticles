@@ -1,7 +1,6 @@
-package io.github.bloepiloepi.particles.shapes.builder;
+package io.github.bloepiloepi.particles.shapes.polygon;
 
-import io.github.bloepiloepi.particles.shapes.MultiPolygon;
-import io.github.bloepiloepi.particles.shapes.ParticleShape;
+import io.github.bloepiloepi.particles.ParticleShape;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.utils.validate.Check;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +13,7 @@ public class MultiPolygonBuilder {
     private PolygonBuilder lastPolygon;
 
     public @NotNull MultiPolygonBuilder lineStart(@NotNull Vec position) {
-        lastPolygon = ParticleShape.polygon().addPoint(position);
+        lastPolygon = ParticlePolygon.builder().addPoint(position);
         return this;
     }
 
