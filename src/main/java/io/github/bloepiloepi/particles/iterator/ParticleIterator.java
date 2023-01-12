@@ -1,5 +1,8 @@
-package io.github.bloepiloepi.particles.shapes;
+package io.github.bloepiloepi.particles.iterator;
 
+import io.github.bloepiloepi.particles.LinePattern;
+import io.github.bloepiloepi.particles.ParticleShape;
+import io.github.bloepiloepi.particles.options.ShapeOptions;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
@@ -11,7 +14,7 @@ public abstract class ParticleIterator<T extends ParticleShape> {
     protected final T shape;
     protected final ShapeOptions options;
 
-    protected ParticleIterator(T shape, @NotNull ShapeOptions options) {
+    protected ParticleIterator(@NotNull T shape, @NotNull ShapeOptions options) {
         this.shape = shape;
         this.options = options;
     }
@@ -24,5 +27,5 @@ public abstract class ParticleIterator<T extends ParticleShape> {
         draw(players, start, options.getPatternIterator());
     }
 
-    public abstract void draw(@NotNull Collection<Player> players, @NotNull Vec start, @NotNull LinePattern.Iterator pattern);
+    public abstract void draw(@NotNull Collection<Player> players, Vec start, LinePattern.Iterator pattern);
 }
